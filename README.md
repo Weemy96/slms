@@ -8,7 +8,7 @@ Download Git (<https://git-scm.com/download/mac>),and install it.
 
 **Linux Ubuntu/Debian**
 ```console
-$ sudo apt update && apt install git -y
+$ sudo apt update && sudo apt install git -y
 ```
 
 **Other Linux Version**<br>
