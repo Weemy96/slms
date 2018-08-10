@@ -1,0 +1,23 @@
+**<h1>SLMS (Staff Leave Management System)</h1>**<br>
+0. First you need install QT (<https://www.qt.io/download>), select Open Sourse. And also install git.<br><br>
+**Windows**<br>
+Download Git (<https://git-scm.com/download/win>),and install it.
+
+**macOS**<br>
+Download Git (<https://git-scm.com/download/mac>),and install it.
+
+**Linux Ubuntu/Debian**
+```console
+$ sudo apt update && apt install git -y
+```
+
+**Other Linux Version**<br>
+Refer [here](https://git-scm.com/download/linux)
+
+<br>1. Install latest SDK for QT.<br>
+2. Go to you folder for download this project.<br>
+3. Open you Terminal/CMD on the folder location and type the command to clone project<br>
+**_[Your ID]= you bitbucket username，and remove [ ]_.**
+```console
+$ git clone https://[Your ID]@bitbucket.org/mmu-cpp/slms.git
+```
