@@ -21,3 +21,7 @@ Refer [here](https://git-scm.com/download/linux)
 ```console
 $ git clone https://[Your ID]@bitbucket.org/mmu-cpp/slms.git
 ```
+
+<br>**Don't know how to use Git?**
+<br>Read [here](https://git-scm.com/book/en/v2)
+<br>And [here](http://try.github.io/)
