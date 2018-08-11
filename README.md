@@ -23,5 +23,13 @@ $ git clone https://[Your ID]@bitbucket.org/mmu-cpp/slms.git
 ```
 
 <br>**Don't know how to use Git?**
-<br>Read [here](https://git-scm.com/book/en/v2)
-<br>And [here](http://try.github.io/)
+<br>Read [documentation](https://git-scm.com/book/en/v2)
+and [here](http://try.github.io/)
+
+<br>**After read the documentation also don't know to use?**
+<br>OK, fine. <br>Download Github Desktop, easy for you.
+<br><br>**Windows and macOS**
+<br><https://desktop.github.com/>
+<br><br>**Linux**
+<br> <https://github.com/shiftkey/desktop/releases>
+<br>****Recommend use AppImage, not need to install**
