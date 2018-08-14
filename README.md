@@ -40,10 +40,9 @@ Or use GitKraken also is nice choice, but need login with GitHub account / GitKr
 <https://www.gitkraken.com/download>
 
 ### Linux (Recommend use Snap)
-Install command
-```shell
+Install command   
+```console
 $ sudo snap install gitkraken
-````
-
+````   
 #### If your Linux PC don't have snap
 Refer [here](https://docs.snapcraft.io/core/install)
