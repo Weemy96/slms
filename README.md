@@ -33,3 +33,17 @@ OK, fine. Download Github Desktop, easy for you.
 #### Linux
 <https://github.com/shiftkey/desktop/releases>
 #### Recommend use AppImage, not need to install
+-----
+Or use GitKraken also is nice choice, but need login with GitHub account / GitKraken account (**Not commercial use are Free**)   
+
+#### Windows and macOS
+<https://www.gitkraken.com/download>
+
+### Linux (Recommend use Snap)
+Install command
+```shell
+$ sudo snap install gitkraken
+````
+
+#### If your Linux PC don't have snap
+Refer [here](https://docs.snapcraft.io/core/install)
