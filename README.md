@@ -1,5 +1,9 @@
 SLMS (Staff Leave Management System)
 ======================================
+### Warning: Do not use [master] repo!! And please create new branch form [dev]. [dev] branch also don't overwrite, Thank!
+
+### **Use GitHub Desktop or GitKraken to create new branch are RECOMMEND, for first time use git version control.
+
 0. First you need install QT (<https://www.qt.io/download>), select Open Sourse. And also install git.
 1. Install latest SDK for QT.
 #### Windows
