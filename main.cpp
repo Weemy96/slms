@@ -9,27 +9,62 @@
 
 void CreateUser();
 void CreateRecord();
+void CreateLog();
 void CreateAll();
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     bool isDataFolderExists = QDir("Data").exists();
-    if (!isDataFolderExists)
+    if (!isDataFolderExists) //check Data folder is exists. If NO, create it and create all file needed.
     {
         QDir().mkdir("Data");
         CreateAll();
     }
     else
     {
-        if(QDir("Data").isEmpty()) CreateAll();
-        if(QFileInfo("Data/user.txt").exists())
+        if(QDir("Data").isEmpty()) CreateAll(); //check Data folder is empty. If TRUE, so Create All file need
+
+//employee
+        if(QFileInfo("Data/employee.txt").exists()) //check employee.txt is exists. If NO, create it.
         {
-            if(QFileInfo("Data/user.txt").isDir())
+            if(QFileInfo("Data/employee.txt").isDir()) //check employee.txt is folder, If YES, remove it and create file.
             {
-                QDir("Data/user.txt").removeRecursively();
+                QDir("Data/employee.txt").removeRecursively();
                 CreateUser();
             }
+        }
+        else
+        {
+            CreateUser();
+        }
+
+//record
+        if(QFileInfo("Data/record.txt").exists()) //check record.txt is exists. If NO, create it.
+        {
+            if(QFileInfo("Data/record.txt").isDir()) //check record.txt is folder. If YES, remove it and create file.
+            {
+                QDir("Data/record.txt").removeRecursively();
+                CreateRecord();
+            }
+        }
+        else
+        {
+            CreateRecord();
+        }
+
+//log
+        if(QFileInfo("Data/log.txt").exists()) //check log.txt is exists. If NO create it.
+        {
+            if(QFileInfo("Data/log.txt").isDir()) //check log.txt is folder. If yes remove it and create file.
+            {
+                QDir("Data/log.txt").removeRecursively();
+                CreateLog();
+            }
+        }
+        else
+        {
+            CreateLog();
         }
     }
 
@@ -46,18 +81,28 @@ int main(int argc, char *argv[])
 
 void CreateUser()
 {
-    QFile createFile("Data/user.txt");
+    QFile createFile("Data/employee.txt");
     createFile.open(QIODevice::WriteOnly|QIODevice::Text);
     createFile.close();
 }
+
 void CreateRecord()
 {
     QFile createFile("Data/record.txt");
     createFile.open(QIODevice::WriteOnly|QIODevice::Text);
     createFile.close();
 }
+
+void CreateLog()
+{
+    QFile createFile("Data/log.txt");
+    createFile.open(QIODevice::WriteOnly|QIODevice::Text);
+    createFile.close();
+}
+
 void CreateAll()
 {
     CreateUser();
     CreateRecord();
+    CreateLog();
 }
