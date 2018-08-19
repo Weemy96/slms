@@ -254,7 +254,7 @@
        <string>Total</string>
       </property>
      </widget>
-     <widget class="QLabel" name="lbl_total">
+     <widget class="QLabel" name="lbl_total_count">
       <property name="geometry">
        <rect>
         <x>480</x>
@@ -343,7 +343,7 @@
     <property name="title">
      <string>&amp;Create New</string>
     </property>
-    <addaction name="actionCre"/>
+    <addaction name="menu_CreateNewEmployee"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -355,7 +355,7 @@
    <addaction name="menuCe"/>
    <addaction name="menuAbout"/>
   </widget>
-  <action name="actionCre">
+  <action name="menu_CreateNewEmployee">
    <property name="text">
     <string>Create &amp;New Employee</string>
    </property>

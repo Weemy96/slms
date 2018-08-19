@@ -25,9 +25,11 @@ private slots:
 
     void on_rb_backon_clicked();
 
-    void on_txt_return_back_date_time_dateChanged(const QDate &date);
-
     void on_txt_leave_datetime_box_dateTimeChanged(const QDateTime &dateTime);
+
+    void on_txt_return_back_date_time_dateTimeChanged(const QDateTime &dateTime);
+
+    void on_menu_CreateNewEmployee_triggered();
 
 private:
     Ui::MainWindow *ui;
