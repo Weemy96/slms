@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QtDebug> //debug lib
 #include "createnewemployee.h"
+#include "savetofile.h"
 
 void setMinTimeForLeaveBox();
 QString countDateTime(QDateTime leave, QDateTime back);
@@ -14,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinTimeForLeaveBox();
+    bool tt=savetofile::saveTxtToFile("Data/log.txt","testing! "+QDateTime::currentDateTime().toString());
+    qDebug()<<"is: "+ static_cast<QString>(tt);
 }
 
 MainWindow::~MainWindow()

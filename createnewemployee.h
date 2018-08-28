@@ -18,6 +18,9 @@ public:
 private slots:
     void on_btn_cancel_clicked();
 
+    void on_btn_Create_clicked();
+    bool checkInput();
+
 private:
     Ui::CreateNewEmployee *ui;
 };

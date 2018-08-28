@@ -25,11 +25,13 @@ CONFIG += c++11
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    createnewemployee.cpp
+    createnewemployee.cpp \
+    savetofile.cpp
 
 HEADERS += \
         mainwindow.h \
-    createnewemployee.h
+    createnewemployee.h \
+    savetofile.h
 
 FORMS += \
         mainwindow.ui \
