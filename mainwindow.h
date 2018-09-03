@@ -31,6 +31,13 @@ private slots:
 
     void on_menu_CreateNewEmployee_triggered();
 
+    void on_btn_check_clicked();
+    void setEnableFunc(bool isEnable);
+
+    void on_txt_id_returnPressed();
+
+    void on_tabWidget_tabBarClicked(int index);
+
 private:
     Ui::MainWindow *ui;
 };

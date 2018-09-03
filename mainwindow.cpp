@@ -4,8 +4,15 @@
 #include <QtDebug> //debug lib
 #include "createnewemployee.h"
 #include "savetofile.h"
+#include <QMessageBox>
+#include <QRegExpValidator>
+
+#include <QFile>
+#include <QString>
+#include <QTextStream>
 
 void setMinTimeForLeaveBox();
+void setEnableFunc(bool isEnable);
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
 
@@ -15,13 +22,40 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     setMinTimeForLeaveBox();
-    bool tt=savetofile::saveTxtToFile("Data/log.txt","testing! "+QDateTime::currentDateTime().toString());
-    qDebug()<<"is: "+ static_cast<QString>(tt);
+    ui->txt_id->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9_]{0,10}")));
+    savetofile *save_log = new savetofile();
+    bool isSaved = save_log->saveTxtToFile("Data/log.txt","testing! "+QDateTime::currentDateTime().toString());
+    delete  save_log;
+    qDebug()<<"Log is saved: " << isSaved;
+
+
+    //User friendly setting
+    ui->txt_id->setFocusPolicy(Qt::StrongFocus);
+    ui->txt_id->setFocus();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setEnableFunc(bool isEnable)
+{
+    ui->txt_remark->setEnabled(isEnable);
+    ui->lbl_remark->setEnabled(isEnable);
+    ui->lbl_leave_on->setEnabled(isEnable);
+    ui->lbl_total->setEnabled(isEnable);
+    ui->txt_day_num_box->setEnabled(isEnable);
+    ui->rb_days->setEnabled(isEnable);
+    ui->rb_backon->setEnabled(isEnable);
+    ui->txt_leave_datetime_box->setEnabled(isEnable);
+    if(!isEnable) ui->rb_days->setChecked(1);
+    ui->lbl_total_count->setEnabled(isEnable);
+    ui->txt_return_back_date_time->setEnabled(false);
+    //User friendly setting
+    ui->txt_id->setFocusPolicy(Qt::StrongFocus);
+    ui->txt_id->setFocus();
+
 }
 
 void MainWindow::on_btn_clear_clicked() //clear and reset input
@@ -31,6 +65,7 @@ void MainWindow::on_btn_clear_clicked() //clear and reset input
     ui->txt_remark->clear();
     ui->txt_day_num_box->setValue(0);
     setMinTimeForLeaveBox();
+    setEnableFunc(false);
 }
 
 void MainWindow::setMinTimeForLeaveBox()
@@ -107,4 +142,87 @@ void MainWindow::on_menu_CreateNewEmployee_triggered()
     CreateNewEmployee createNewEmployeeProfile;
     createNewEmployeeProfile.setModal(true);
     createNewEmployeeProfile.exec();
+}
+
+void MainWindow::on_btn_check_clicked()
+{
+    bool isFound=false;
+    QMessageBox msgBox;
+    if(ui->txt_id->text()=="")
+    {
+        msgBox.setIcon(QMessageBox::Critical);
+        msgBox.setWindowTitle("Error");
+        msgBox.setText("Can't be empty.");
+        msgBox.exec();
+        on_btn_clear_clicked();
+
+        //User friendly setting
+        ui->txt_id->setFocusPolicy(Qt::StrongFocus);
+        ui->txt_id->setFocus();
+    }
+    else
+    {
+        QFile file("Data/employee.txt");
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream in(&file);
+            while (!in.atEnd()) {
+                QString get_text = in.readLine();
+                if(get_text.contains(ui->txt_id->text(),Qt::CaseSensitive))
+                {
+                    isFound=true;
+                    QStringList getDetail=get_text.split("|");
+                    ui->txt_id->setText(getDetail[0]);
+                    ui->txt_name->setText(getDetail[1]);
+                }
+            }
+            file.close();
+        }
+        if(!isFound)
+        {
+            msgBox.setIcon(QMessageBox::Information);
+            msgBox.setWindowTitle("ID not found");
+            msgBox.setText("Sorry, ID: "+ui->txt_id->text()+" not in record.\nPlease create new ID.");
+            msgBox.exec();
+            on_btn_clear_clicked();
+
+            //User friendly setting
+            ui->txt_id->setFocusPolicy(Qt::StrongFocus);
+            ui->txt_id->setFocus();
+        }
+        else
+        {
+            //User friendly setting
+            setEnableFunc(true);
+            ui->txt_remark->setFocusPolicy(Qt::StrongFocus);
+            ui->txt_remark->setFocus();
+        }
+
+    }
+}
+
+void MainWindow::on_txt_id_returnPressed()
+{
+    on_btn_check_clicked();
+}
+
+void MainWindow::on_tabWidget_tabBarClicked(int index)
+{
+    QMessageBox msgBox;
+    switch(index)
+    {
+        case 0:
+            //User friendly setting
+            ui->txt_id->setFocusPolicy(Qt::StrongFocus);
+            ui->txt_id->setFocus();
+            break;
+        case 1:
+
+            break;
+        default:
+            msgBox.setWindowTitle("Error!");
+            msgBox.setText("Someting Wrong.\nError: tabBarClicked Error");
+            msgBox.exec();
+            break;
+    }
 }

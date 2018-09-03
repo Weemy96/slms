@@ -47,6 +47,9 @@
       </property>
      </widget>
      <widget class="QSpinBox" name="txt_day_num_box">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>480</x>
@@ -65,7 +68,10 @@
        <number>0</number>
       </property>
      </widget>
-     <widget class="QLabel" name="label_3">
+     <widget class="QLabel" name="lbl_leave_on">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -92,6 +98,9 @@
       </property>
      </widget>
      <widget class="QDateTimeEdit" name="txt_leave_datetime_box">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>480</x>
@@ -133,7 +142,7 @@
      </widget>
      <widget class="QPlainTextEdit" name="txt_remark">
       <property name="enabled">
-       <bool>true</bool>
+       <bool>false</bool>
       </property>
       <property name="geometry">
        <rect>
@@ -144,7 +153,10 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_7">
+     <widget class="QLabel" name="lbl_remark">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -186,7 +198,7 @@
        <string>Add Record</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_6">
+     <widget class="QPushButton" name="btn_check">
       <property name="geometry">
        <rect>
         <x>270</x>
@@ -200,6 +212,9 @@
       </property>
      </widget>
      <widget class="QRadioButton" name="rb_days">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>390</x>
@@ -216,6 +231,9 @@
       </property>
      </widget>
      <widget class="QRadioButton" name="rb_backon">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>390</x>
@@ -241,7 +259,10 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="lbl_total">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>410</x>
@@ -255,6 +276,9 @@
       </property>
      </widget>
      <widget class="QLabel" name="lbl_total_count">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>480</x>

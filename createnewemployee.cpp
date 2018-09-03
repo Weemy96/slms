@@ -1,18 +1,22 @@
 #include "createnewemployee.h"
 #include "ui_createnewemployee.h"
 #include <QFile>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QRegExpValidator>
 #include <QMessageBox>
 #include "savetofile.h"
+#include <QDebug>
 
 CreateNewEmployee::CreateNewEmployee(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CreateNewEmployee)
 {
     ui->setupUi(this);
-    ui->txt_createNewID->setPlaceholderText("10 char for id");
+    ui->txt_createNewID->setPlaceholderText("Only accept 10 character of number and alphabet");
     ui->txt_createNewID->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9_]{0,10}")));
+    ui->txt_createNewID->setFocusPolicy(Qt::StrongFocus);
+    ui->txt_createNewID->setFocus();
 }
 
 CreateNewEmployee::~CreateNewEmployee()
@@ -30,17 +34,9 @@ void CreateNewEmployee::on_btn_Create_clicked()
     QMessageBox msgBox;
     if(checkInput())
     {
-//        QString savefile="Data/employee.txt";
-//        QFile file(savefile);
-//        if(file.open(QIODevice::Text|QIODevice::Append))
-//        {
-//            QTextStream stream(&file);
-//            stream << ui->txt_createNewID->text()+"|"+ui->txt_CreateNewName->text() <<endl;
-//            file.close();
-//        }
         bool isDone=false;
-
-        isDone = savetofile::saveTxtToFile("Data/employee.txt",ui->txt_createNewID->text()+"|"+ui->txt_CreateNewName->text());
+        savetofile *save_new_employee = new savetofile();
+        isDone = save_new_employee->saveTxtToFile("Data/employee.txt",ui->txt_createNewID->text()+"|"+ui->txt_CreateNewName->text());
         if(isDone)
         {
             msgBox.setText("Create Done.");
@@ -49,13 +45,19 @@ void CreateNewEmployee::on_btn_Create_clicked()
         }
         else
         {
-            msgBox.setText("Sorry Fail");
+            QFileInfo info("./Data/employee.txt");
+            msgBox.setText("Sorry Fail to save.\nMaybe the file set as Read Only or need Permission to Write.\nPlease Check the file Properties at\n\""+info.absoluteFilePath()+"\"");
+            msgBox.setIcon(QMessageBox::Critical);
+            msgBox.setWindowTitle("Error to save!");
             msgBox.exec();
         }
+        delete save_new_employee;
     }
     else
     {
         msgBox.setText("Pls fill all text box.");
+        msgBox.setWindowTitle("Warning");
+        msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();
     }
 
