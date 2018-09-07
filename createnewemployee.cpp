@@ -1,12 +1,10 @@
 #include "createnewemployee.h"
 #include "ui_createnewemployee.h"
 #include <QFile>
-#include <QFileInfo>
 #include <QTextStream>
 #include <QRegExpValidator>
 #include <QMessageBox>
 #include "savetofile.h"
-#include <QDebug>
 
 CreateNewEmployee::CreateNewEmployee(QWidget *parent) :
     QDialog(parent),
@@ -42,14 +40,6 @@ void CreateNewEmployee::on_btn_Create_clicked()
             msgBox.setText("Create Done.");
             msgBox.exec();
             this->close();
-        }
-        else
-        {
-            QFileInfo info("./Data/employee.txt");
-            msgBox.setText("Sorry Fail to save.\nMaybe the file set as Read Only or need Permission to Write.\nPlease Check the file Properties at\n\""+info.absoluteFilePath()+"\"");
-            msgBox.setIcon(QMessageBox::Critical);
-            msgBox.setWindowTitle("Error to save!");
-            msgBox.exec();
         }
         delete save_new_employee;
     }

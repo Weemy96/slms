@@ -26,18 +26,24 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     createnewemployee.cpp \
-    savetofile.cpp
+    savetofile.cpp \
+    edit.cpp
 
 HEADERS += \
         mainwindow.h \
     createnewemployee.h \
-    savetofile.h
+    savetofile.h \
+    edit.h
 
 FORMS += \
         mainwindow.ui \
-    createnewemployee.ui
+    createnewemployee.ui \
+    edit.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+unix
+{
+    qnx: target.path = /tmp/$${TARGET}/bin
+    else: unix:!android: target.path = /opt/$${TARGET}/bin
+}
 !isEmpty(target.path): INSTALLS += target
