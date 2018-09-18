@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     setMinTimeForLeaveBox();
     ui->txt_id->setValidator(new QRegExpValidator( QRegExp("[A-Za-z0-9_]{0,10}")));
     savetofile *save_log = new savetofile();
-    bool isSaved = save_log->saveTxtToFile("Data/log.txt","testing! "+QDateTime::currentDateTime().toString());
+    bool isSaved = save_log->saveTxtToFile("Data/log.txt","Software opened at "+QDateTime::currentDateTime().toString());
     delete  save_log;
     qDebug()<<"Log Issaved: " << isSaved; //Debug: get Infomation
 

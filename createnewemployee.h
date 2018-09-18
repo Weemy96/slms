@@ -21,6 +21,8 @@ private slots:
     void on_btn_Create_clicked();
     bool checkInput();
 
+    void on_txt_CreateNewName_textChanged(const QString &arg1);
+
 private:
     Ui::CreateNewEmployee *ui;
 };

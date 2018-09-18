@@ -41,3 +41,12 @@ bool savetofile::saveTxtToFile(QString FileLoc, QString text)
         return false;
     }
 }
+
+QString savetofile::clean_space_front_n_back(QString str)
+{
+    std::string cstr = str.toUtf8().constData();
+    cstr.erase(0, cstr.find_first_not_of(" \t"));
+    cstr.erase(cstr.find_last_not_of(" \t") + 1);
+    str = QString::fromStdString(cstr);
+    return str;
+}
