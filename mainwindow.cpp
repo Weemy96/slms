@@ -62,7 +62,7 @@ void MainWindow::setEnableFunc(bool isEnable)
 }
 
 void MainWindow::on_btn_clear_clicked() //clear and reset input
-{
+{  
     ui->txt_id->clear();
     ui->txt_name->clear();
     ui->txt_remark->clear();
@@ -283,5 +283,33 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
             msgBox.setText("Someting Wrong.\nError: tabBarClicked Error");
             msgBox.exec();
             break;
+    }
+}
+
+void MainWindow::on_btn_addrecord_clicked()
+{
+    savetofile *save_leave_data_n_function = new savetofile();
+    QMessageBox msg;
+    if(save_leave_data_n_function->clean_space_front_n_back(ui->txt_remark->toPlainText().simplified()) != "")
+    {
+        QString id = ui->txt_id->text(),
+                name = ui->txt_name->text(),
+                leave_date = ui->txt_leave_datetime_box->text(),
+                back_date = ui->txt_return_back_date_time->text(),
+                days = ui->txt_day_num_box->text(),
+                between_in = ui->lbl_total_count->text(),
+                remark = save_leave_data_n_function->clean_space_front_n_back(ui->txt_remark->toPlainText());
+
+        //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
+        save_leave_data_n_function->saveTxtToFile("./Data/record.txt",id+"|"+name+"|"+leave_date+"|"+back_date+"|"+days+"|"+between_in+"|"+remark);
+        msg.setText("Save Done!");
+        msg.exec();
+        on_btn_clear_clicked();
+    }
+    else
+    {
+        msg.setWindowTitle("Error!");
+        msg.setText("Remark must filled.");
+        msg.exec();
     }
 }

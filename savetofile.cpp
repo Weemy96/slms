@@ -16,7 +16,7 @@ bool savetofile::saveTxtToFile(QString FileLoc, QString text)
         if(file.open(QIODevice::Text|QIODevice::Append))
         {
             QTextStream stream(&file);
-            stream << text <<endl;
+            stream << text.simplified() <<endl;
             file.close();
             return true;
         }
