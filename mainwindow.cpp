@@ -11,6 +11,7 @@
 #include <QString>
 #include <QTextStream>
 #include <exception>
+#include <QKeyEvent>
 
 void setMinTimeForLeaveBox();
 void setEnableFunc(bool isEnable);
@@ -265,7 +266,7 @@ void MainWindow::on_txt_id_returnPressed()
     on_btn_check_clicked();
 }
 
-void MainWindow::on_tabWidget_tabBarClicked(int index)
+void MainWindow::on_tabWidget_tabBarClicked(int index)//tab bar is change command
 {
     QMessageBox msgBox;
     switch(index)
@@ -276,7 +277,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
             ui->txt_id->setFocus();
             break;
         case 1:
-
+            on_btn_refresh_clicked();
             break;
         default:
             msgBox.setWindowTitle("Error!");
@@ -286,7 +287,7 @@ void MainWindow::on_tabWidget_tabBarClicked(int index)
     }
 }
 
-void MainWindow::on_btn_addrecord_clicked()
+void MainWindow::on_btn_addrecord_clicked() //need add check record <date
 {
     savetofile *save_leave_data_n_function = new savetofile();
     QMessageBox msg;
@@ -311,5 +312,74 @@ void MainWindow::on_btn_addrecord_clicked()
         msg.setWindowTitle("Error!");
         msg.setText("Remark must filled.");
         msg.exec();
+    }
+}
+
+void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
+{
+    QFile record_file("Data/record.txt");
+    QFileInfo info(record_file);
+    int row =0;
+
+    try
+    {
+        if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            QTextStream in(&record_file);
+            while (!in.atEnd()) {
+                QString get_text = in.readLine();
+                row++;
+            }
+            record_file.close();
+        }
+        else
+        {
+            throw QString("Fail to Read");
+        }
+
+        qDebug()<<row;
+        ui->lbl_total_record->setText("Total Record: "+QString::number(row));
+        //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
+        //[0][1]    [2]            [3]  [4]                 [5]                        [6]
+        //create new 2d array
+        QString **get_record_detail=new QString*[row];
+        for(int i=0; i<row;i++) get_record_detail[i] = new QString[7];
+
+        //store data into array
+        if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
+        {
+            if(row>0)
+            {
+                int count=0;
+                QTextStream in(&record_file);
+                while (!in.atEnd())
+                {
+                    QString get_text = in.readLine();
+                    QStringList getDetail=get_text.split("|");
+                    for(int i=0;i<7;i++)
+                    {
+                        get_record_detail[count][i]= getDetail[i];
+                    }
+                    qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6];
+                    count++;
+                }
+            }
+            record_file.close();
+        }
+
+        //free up memory
+        delete [] get_record_detail;
+    }
+    catch(QString ex)
+    {
+
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_F5)
+    {
+        on_btn_refresh_clicked();
     }
 }

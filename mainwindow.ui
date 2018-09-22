@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -306,7 +306,7 @@
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="btn_refresh">
       <property name="geometry">
        <rect>
         <x>380</x>
@@ -349,6 +349,19 @@
       </property>
       <property name="text">
        <string>Delete</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="lbl_total_record">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>330</y>
+        <width>331</width>
+        <height>19</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Total Record: </string>
       </property>
      </widget>
     </widget>

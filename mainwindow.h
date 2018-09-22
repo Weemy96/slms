@@ -17,6 +17,7 @@ public:
 
 private slots:
     void on_btn_clear_clicked();
+
     void setMinTimeForLeaveBox();
 
     void on_txt_day_num_box_valueChanged(int days);
@@ -32,6 +33,7 @@ private slots:
     void on_menu_CreateNewEmployee_triggered();
 
     void on_btn_check_clicked();
+
     void setEnableFunc(bool isEnable);
 
     void on_txt_id_returnPressed();
@@ -39,6 +41,10 @@ private slots:
     void on_tabWidget_tabBarClicked(int index);
 
     void on_btn_addrecord_clicked();
+
+    void on_btn_refresh_clicked();
+
+    void keyPressEvent(QKeyEvent *event);
 
 private:
     Ui::MainWindow *ui;

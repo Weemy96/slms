@@ -11,45 +11,45 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Edit - </string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>50</x>
      <y>20</y>
-     <width>63</width>
+     <width>21</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>ID</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>50</y>
-     <width>63</width>
+     <x>30</x>
+     <y>60</y>
+     <width>41</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Name</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>342</x>
      <y>20</y>
-     <width>63</width>
-     <height>19</height>
+     <width>71</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Leave On</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_4">
@@ -62,10 +62,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Back On</string>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="dateTimeEdit">
+  <widget class="QDateTimeEdit" name="date_time_leave_on_edit">
    <property name="geometry">
     <rect>
      <x>420</x>
@@ -75,32 +75,32 @@
     </rect>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="dateTimeEdit_2">
+  <widget class="QDateTimeEdit" name="date_time_back_ediit">
    <property name="geometry">
     <rect>
      <x>420</x>
-     <y>50</y>
+     <y>60</y>
      <width>194</width>
      <height>28</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="txt_id_edit">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>10</y>
-     <width>113</width>
+     <x>80</x>
+     <y>20</y>
+     <width>191</width>
      <height>27</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="txt_name_edit">
    <property name="geometry">
     <rect>
-     <x>100</x>
-     <y>50</y>
-     <width>113</width>
+     <x>80</x>
+     <y>60</y>
+     <width>191</width>
      <height>27</height>
     </rect>
    </property>
@@ -109,21 +109,21 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>100</y>
+     <y>120</y>
      <width>63</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Remark</string>
    </property>
   </widget>
-  <widget class="QPlainTextEdit" name="plainTextEdit">
+  <widget class="QPlainTextEdit" name="txt_remark_edit">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>20</x>
      <y>150</y>
-     <width>551</width>
+     <width>621</width>
      <height>191</height>
     </rect>
    </property>
@@ -131,33 +131,33 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>370</x>
      <y>100</y>
-     <width>63</width>
+     <width>41</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Total</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_7">
+  <widget class="QLabel" name="lbl_total_count_edit">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>420</x>
      <y>100</y>
-     <width>63</width>
+     <width>201</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>1950 days 23 hours 59 mints</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="btn_save_edit">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>450</x>
      <y>350</y>
      <width>85</width>
      <height>27</height>
@@ -167,10 +167,10 @@
     <string>Save</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="btn_cancel_edit">
    <property name="geometry">
     <rect>
-     <x>530</x>
+     <x>550</x>
      <y>350</y>
      <width>85</width>
      <height>27</height>
