@@ -75,7 +75,7 @@ void MainWindow::on_btn_clear_clicked() //clear and reset input
 void MainWindow::setMinTimeForLeaveBox()
 {
     QDateTime CurrentDateTime = QDateTime::currentDateTime(); //get current DateTime when run programm.
-    ui->txt_leave_datetime_box->setMinimumDateTime(CurrentDateTime); //set time to minimum Date and Time.
+    ui->txt_leave_datetime_box->setMinimumDateTime(CurrentDateTime); //set time to minimum Date and Time for now.
     ui->txt_leave_datetime_box->setDateTime(CurrentDateTime); //display date time for current
     ui->txt_return_back_date_time->setMinimumDateTime(CurrentDateTime.addSecs(3600)); //1 hour min leave time
     ui->txt_return_back_date_time->setMaximumDateTime(CurrentDateTime.addDays(1095)); //limit 3y
@@ -141,14 +141,14 @@ QString secondToDHMString(int64_t get_second) //calulate x Day x Hours x Minutes
     return return_str;
 }
 
-void MainWindow::on_menu_CreateNewEmployee_triggered()
+void MainWindow::on_menu_CreateNewEmployee_triggered()//call Create Detail window
 {
     CreateNewEmployee createNewEmployeeProfile;
     createNewEmployeeProfile.setModal(true);
     createNewEmployeeProfile.exec();
 }
 
-void MainWindow::on_btn_check_clicked()
+void MainWindow::on_btn_check_clicked() //checking id is exitst or not
 {
     bool isFound=false;
     QMessageBox msgBox;
@@ -261,7 +261,7 @@ void MainWindow::on_btn_check_clicked()
     }
 }
 
-void MainWindow::on_txt_id_returnPressed()
+void MainWindow::on_txt_id_returnPressed() //enter key in id call on_btn_check_clicked()
 {
     on_btn_check_clicked();
 }
@@ -317,9 +317,20 @@ void MainWindow::on_btn_addrecord_clicked() //need add check record <date
 
 void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
 {
+    //clean all table and refresh
+    ui->table_data_view->disconnect();
+    ui->table_data_view->clearContents();
+    ui->table_data_view->setRowCount(0);
+
+
+    ui->table_data_view->setColumnCount(7);
+    QStringList column_name;
+    column_name<<"ID"<<"Name"<<"Leave Date"<<"Back Date"<<"Days"<<"Between"<<"Remark";
+    ui->table_data_view->setHorizontalHeaderLabels(column_name);
+
     QFile record_file("Data/record.txt");
     QFileInfo info(record_file);
-    int row =0;
+    int row =0, insertrow=0;
 
     try
     {
@@ -360,6 +371,17 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
                     {
                         get_record_detail[count][i]= getDetail[i];
                     }
+                    ui->table_data_view->insertRow(ui->table_data_view->rowCount());
+                    insertrow=ui->table_data_view->rowCount()-1;
+//                    ui->table_data_view->setItem(insertrow,0,new QTableWidgetItem(count));
+                    ui->table_data_view->setItem(insertrow,0,new QTableWidgetItem(get_record_detail[count][0]));
+                    ui->table_data_view->setItem(insertrow,1,new QTableWidgetItem(get_record_detail[count][1]));
+                    ui->table_data_view->setItem(insertrow,2,new QTableWidgetItem(get_record_detail[count][2]));
+                    ui->table_data_view->setItem(insertrow,3,new QTableWidgetItem(get_record_detail[count][3]));
+                    ui->table_data_view->setItem(insertrow,4,new QTableWidgetItem(get_record_detail[count][4]));
+                    ui->table_data_view->setItem(insertrow,5,new QTableWidgetItem(get_record_detail[count][5]));
+                    ui->table_data_view->setItem(insertrow,6,new QTableWidgetItem(get_record_detail[count][6]));
+
                     qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6];
                     count++;
                 }
@@ -381,5 +403,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     if(event->key() == Qt::Key_F5)
     {
         on_btn_refresh_clicked();
+    }
+    else if(ui->tabWidget->currentIndex()==0 && ui->txt_id->isReadOnly() && event->key() == Qt::Key_F3)
+    {
+        on_btn_addrecord_clicked();
     }
 }
