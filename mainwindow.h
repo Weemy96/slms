@@ -55,8 +55,11 @@ private slots:
 
     void call_edit_n_view_subwindow(bool isedit_requ);
 
-
     void on_btn_edit_clicked();
+
+    void on_btn_del_clicked();
+    void del_one_line(int line_number, QString &strall);
+    void del_Line_in_file(int line_number_to_delete, QString filename);
 
 private:
     Ui::MainWindow *ui;

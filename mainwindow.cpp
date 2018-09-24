@@ -20,6 +20,7 @@ void setEnableFunc(bool isEnable);
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
 
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -350,7 +351,7 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
             throw QString("Fail to Read");
         }
 
-        qDebug()<<row;
+        //qDebug()<<row;
         ui->lbl_total_record->setText("Total Record: "+QString::number(row));
         //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
         //[0][1]    [2]            [3]  [4]                 [5]                        [6]
@@ -391,13 +392,19 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
                     ui->table_data_view->setItem(insertrow,5,new QTableWidgetItem(get_record_detail[count][5]));
                     ui->table_data_view->setItem(insertrow,6,new QTableWidgetItem(get_record_detail[count][6]));
 
-                    qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6]<<"\t"<<get_record_detail[count][7];
+                    //qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6]<<"\t"<<get_record_detail[count][7];
                     ui->btn_view->setEnabled(true);
                     ui->btn_edit->setEnabled(true);
                     ui->btn_del->setEnabled(true);
 
                     count++;
                 }
+            }
+            else
+            {
+                ui->btn_view->setEnabled(false);
+                ui->btn_edit->setEnabled(false);
+                ui->btn_del->setEnabled(false);
             }
             record_file.close();
         }
@@ -465,4 +472,79 @@ void MainWindow::call_edit_n_view_subwindow(bool isedit_requ)
     }
 }
 
+void MainWindow::on_btn_del_clicked()
+{
+    QModelIndexList selected_row=ui->table_data_view->selectionModel()->selectedRows();
+    QModelIndex index=selected_row.at(0);
+    int row_selected_index = index.row();
+    del_Line_in_file(row_selected_index, QString("Data/record.txt"));//(row_selected_index,QString("Data/record.txt"));
+    on_btn_refresh_clicked();
+}
 
+void MainWindow::del_one_line(int line_number, QString &strall)//
+{
+    int nLine=0;
+    int Index=0;
+    //calcu nLine step
+    while(Index!=-1)
+    {
+        Index=strall.indexOf('\n',Index+1);
+        nLine++;
+    }
+
+    //if index localtion starting with 0 char find and delete \n
+    if(line_number==0)
+    {
+        int nIndex=strall.indexOf('\n');
+        strall.remove(0,nIndex+1);
+    }
+    else
+    {
+        int nTemp=line_number;
+        int nIndex=0,nIndex2=0;
+        while(nTemp--)
+        {
+            //
+            nIndex=strall.indexOf('\n',nIndex+1);//renew nIndex
+            if(nIndex!=-1)//说明是有效的
+            {
+                nIndex2=strall.indexOf('\n',nIndex+1);
+            }
+        }
+        //删除的行不是最后一行（从nIndex+1这个位置起nIndex2-nIndex个字符全部抹去）
+        if(line_number<nLine-1)
+        {
+            strall.remove(nIndex+1, nIndex2-nIndex);//不用减一
+        }
+        //删除的是最后一行（从nIndex起始len-nIndex个字符全抹去）
+        //不能从nIndex+1处开始，
+        else if(line_number==nLine-1)
+        {
+            int len=strall.length();
+            strall.remove(nIndex,len-nIndex);
+        }
+    }
+}
+
+void MainWindow::del_Line_in_file(int line_number_to_delete, QString filename)
+{
+    QString strall;
+    QFile readfile(filename);
+    if(readfile.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&readfile);
+        strall=stream.readAll();
+    }
+    readfile.close();
+    del_one_line(line_number_to_delete, strall);
+
+    QFile writefile(filename);
+    if(writefile.open(QIODevice::WriteOnly))
+    {
+        QTextStream wrtstream(&writefile);
+        wrtstream<<strall;
+    }
+    writefile.close();
+
+
+}
