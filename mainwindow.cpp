@@ -4,6 +4,7 @@
 #include <QtDebug> //debug lib
 #include "createnewemployee.h"
 #include "savetofile.h"
+#include "edit.h"
 #include <QMessageBox>
 #include <QRegExpValidator>
 #include <QFileInfo>
@@ -12,6 +13,7 @@
 #include <QTextStream>
 #include <exception>
 #include <QKeyEvent>
+#include <QModelIndexList>
 
 void setMinTimeForLeaveBox();
 void setEnableFunc(bool isEnable);
@@ -354,7 +356,7 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
         //[0][1]    [2]            [3]  [4]                 [5]                        [6]
         //create new 2d array
         QString **get_record_detail=new QString*[row];
-        for(int i=0; i<row;i++) get_record_detail[i] = new QString[7];
+        for(int i=0; i<row;i++) get_record_detail[i] = new QString[8]; //[7]is row
 
         //store data into array
         if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
@@ -367,9 +369,16 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
                 {
                     QString get_text = in.readLine();
                     QStringList getDetail=get_text.split("|");
-                    for(int i=0;i<7;i++)
+                    for(int i=0;i<8;i++)
                     {
-                        get_record_detail[count][i]= getDetail[i];
+                        if(i!=7)
+                        {
+                            get_record_detail[count][i]= getDetail[i];
+                        }
+                        else
+                        {
+                            get_record_detail[count][i]=QString::number(count);
+                        }
                     }
                     ui->table_data_view->insertRow(ui->table_data_view->rowCount());
                     insertrow=ui->table_data_view->rowCount()-1;
@@ -382,7 +391,11 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
                     ui->table_data_view->setItem(insertrow,5,new QTableWidgetItem(get_record_detail[count][5]));
                     ui->table_data_view->setItem(insertrow,6,new QTableWidgetItem(get_record_detail[count][6]));
 
-                    qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6];
+                    qDebug()<<get_record_detail[count][0]<<"\t"<<get_record_detail[count][1]<<"\t"<<get_record_detail[count][2]<<"\t"<<get_record_detail[count][3]<<"\t"<<get_record_detail[count][4]<<"\t"<<get_record_detail[count][5]<<"\t"<<get_record_detail[count][6]<<"\t"<<get_record_detail[count][7];
+                    ui->btn_view->setEnabled(true);
+                    ui->btn_edit->setEnabled(true);
+                    ui->btn_del->setEnabled(true);
+
                     count++;
                 }
             }
@@ -391,6 +404,8 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
 
         //free up memory
         delete [] get_record_detail;
+        ui->table_data_view->selectRow(0);
+
     }
     catch(QString ex)
     {
@@ -409,3 +424,45 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         on_btn_addrecord_clicked();
     }
 }
+
+QStringList MainWindow::get_record_data_passing;
+bool MainWindow::isedit_saved = false;
+bool MainWindow::isedit_req;
+
+void MainWindow::on_btn_view_clicked()
+{
+    call_edit_n_view_subwindow(false);
+}
+
+void MainWindow::on_btn_edit_clicked()
+{
+    call_edit_n_view_subwindow(true);
+}
+
+void MainWindow::call_edit_n_view_subwindow(bool isedit_requ)
+{
+    QModelIndexList selected_row=ui->table_data_view->selectionModel()->selectedRows();
+    QModelIndex index=selected_row.at(0);
+    int row_selected_index = index.row();
+
+    for(int i=0;i<ui->table_data_view->columnCount();i++)
+    {
+        get_record_data_passing<<ui->table_data_view->item(row_selected_index,i)->text();
+    }
+    get_record_data_passing<<QString::number(row_selected_index);
+    isedit_req=isedit_requ;
+    qDebug()<<"at mainmenu.cpp: "<<get_record_data_passing;
+    edit *callview = new edit;
+    callview->setModal(true);
+    callview->exec();
+    qDebug()<<"callview is closed";
+    delete callview;
+    get_record_data_passing.clear(); //reset string
+    if(MainWindow::isedit_saved)
+    {
+        on_btn_refresh_clicked();
+        MainWindow::isedit_saved=false;
+    }
+}
+
+

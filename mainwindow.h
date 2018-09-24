@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStringList>
 
 namespace Ui {
 class MainWindow;
@@ -14,6 +15,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    static QStringList get_record_data_passing;
+    static bool isedit_saved;
+    static bool isedit_req;
+
 
 private slots:
     void on_btn_clear_clicked();
@@ -45,6 +50,13 @@ private slots:
     void on_btn_refresh_clicked();
 
     void keyPressEvent(QKeyEvent *event);
+
+    void on_btn_view_clicked();
+
+    void call_edit_n_view_subwindow(bool isedit_requ);
+
+
+    void on_btn_edit_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -78,7 +78,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QDateTimeEdit" name="date_time_back_ediit">
+  <widget class="QDateTimeEdit" name="date_time_back_edit">
    <property name="geometry">
     <rect>
      <x>420</x>
