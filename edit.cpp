@@ -10,7 +10,7 @@
 
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
-
+bool isValidDateTimeInBetween(QString id, QString leave);
 
 edit::edit(QWidget *parent) :
     QDialog(parent),
@@ -58,47 +58,74 @@ void edit::on_btn_save_edit_clicked()
     }
     else if (ui->btn_save_edit->text()=="Save")
     {
-        int row_number=MainWindow::get_record_data_passing.value(7).toInt();
-        QString read_all_data;
-        QStringList data_list;
-        QFile file("Data/record.txt");
-        QTextStream stream(&file);
-        if(file.open(QIODevice::ReadOnly|QIODevice::Text))
+        if(!isValidDateTimeInBetween(ui->txt_id_edit->text(),ui->date_time_leave_on_edit->text()))
         {
-            QTextStream stream(&file);
-            read_all_data=stream.readAll();
-        }
-        file.close();
-        data_list=read_all_data.split("\n");
-        savetofile *clean_space_and_enter = new savetofile;
-        data_list[row_number]=ui->txt_id_edit->text()+"|"+ui->txt_name_edit->text()+"|"+ui->date_time_leave_on_edit->text()+"|"+ui->date_time_back_edit->text()+"|"+QString::number(ui->date_time_leave_on_edit->dateTime().daysTo(ui->date_time_back_edit->dateTime()))+"|"
-                +ui->lbl_total_count_edit->text()+"|"+ clean_space_and_enter->clean_space_front_n_back(ui->txt_remark_edit->toPlainText().simplified());
-        delete clean_space_and_enter;
-        data_list.removeLast();
-
-        if(file.open(QIODevice::WriteOnly|QIODevice::Text))
-        {
-            qDebug()<<data_list[row_number];
-            for(int line=0;line<data_list.count();line++)
+            if(!isValidDateTimeInBetween(ui->txt_id_edit->text(),ui->date_time_back_edit->text()))
             {
-                if(line==read_all_data.count()-1)
+                int row_number=MainWindow::get_record_data_passing.value(7).toInt();
+                QString read_all_data;
+                QStringList data_list;
+                QFile file("Data/record.txt");
+                QTextStream stream(&file);
+                if(file.open(QIODevice::ReadOnly|QIODevice::Text))
                 {
-                    stream<<data_list.at(line);
+                    QTextStream stream(&file);
+                    read_all_data=stream.readAll();
                 }
-                else
+                file.close();
+                data_list=read_all_data.split("\n");
+                savetofile *clean_space_and_enter = new savetofile;
+                data_list[row_number]=ui->txt_id_edit->text()+"|"+ui->txt_name_edit->text()+"|"+ui->date_time_leave_on_edit->text()+"|"+ui->date_time_back_edit->text()+"|"+QString::number(ui->date_time_leave_on_edit->dateTime().daysTo(ui->date_time_back_edit->dateTime()))+"|"
+                        +ui->lbl_total_count_edit->text()+"|"+ clean_space_and_enter->clean_space_front_n_back(ui->txt_remark_edit->toPlainText().simplified());
+                delete clean_space_and_enter;
+                data_list.removeLast();
+
+                if(file.open(QIODevice::WriteOnly|QIODevice::Text))
                 {
-                    stream<<data_list.at(line)<<"\n";
+                    qDebug()<<data_list[row_number];
+                    for(int line=0;line<data_list.count();line++)
+                    {
+                        if(line==read_all_data.count()-1)
+                        {
+                            stream<<data_list.at(line);
+                        }
+                        else
+                        {
+                            stream<<data_list.at(line)<<"\n";
+                        }
+                    }
                 }
+                file.close();
+
+                MainWindow::isedit_saved=true;
+                msgbox.setWindowTitle("Edit");
+                msgbox.setText("Edit saved.");
+                msgbox.setIcon(QMessageBox::Information);
+                msgbox.exec();
+                on_btn_cancel_edit_clicked();
+            }
+            else
+            {
+                msgbox.setWindowTitle("Warning");
+                msgbox.setText("Can't select return date for record, because crash with your saved.");
+                msgbox.setIcon(QMessageBox::Warning);
+                msgbox.exec();
             }
         }
-        file.close();
-
-        MainWindow::isedit_saved=true;
-        msgbox.setWindowTitle("Edit");
-        msgbox.setText("Edit saved.");
-        msgbox.setIcon(QMessageBox::Information);
+        else
+        {
+            msgbox.setWindowTitle("Warning");
+            msgbox.setText("Can't select leave date for record, because crash with your saved.");
+            msgbox.setIcon(QMessageBox::Warning);
+            msgbox.exec();
+        }
+    }
+    else
+    {
+        msgbox.setWindowTitle("Error");
+        msgbox.setText("Error! Internal corrupt.");
+        msgbox.setIcon(QMessageBox::Critical);
         msgbox.exec();
-        on_btn_cancel_edit_clicked();
     }
 }
 

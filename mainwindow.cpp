@@ -18,6 +18,8 @@
 
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
+bool isValidDateTimeInBetween(QString id, QString leave);
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -302,11 +304,32 @@ void MainWindow::on_btn_addrecord_clicked() //need add check record <date
                 between_in = ui->lbl_total_count->text(),
                 remark = save_leave_data_n_function->clean_space_front_n_back(ui->txt_remark->toPlainText());
 
-        //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
-        save_leave_data_n_function->saveTxtToFile("./Data/record.txt",id+"|"+name+"|"+leave_date+"|"+back_date+"|"+days+"|"+between_in+"|"+remark);
-        msg.setText("Save Done!");
-        msg.exec();
-        on_btn_clear_clicked();
+        if(isValidDateTimeInBetween(id,ui->txt_leave_datetime_box->text()))
+        {
+            msg.setText("Can't select this leave date, because crash with your saved record.\nPlease select another date and try again.");
+            msg.setIcon(QMessageBox::Warning);
+            msg.setWindowTitle("Warning!");
+            msg.exec();
+        }
+        else
+        {
+            if(isValidDateTimeInBetween(id,ui->txt_return_back_date_time->text()))
+            {
+                msg.setText("Can't select this return date, because crash with your saved record.\nPlease select another date and try again.");
+                msg.setIcon(QMessageBox::Warning);
+                msg.setWindowTitle("Warning!");
+                msg.exec();
+            }
+            else
+            {
+                //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
+                save_leave_data_n_function->saveTxtToFile("./Data/record.txt",id+"|"+name+"|"+leave_date+"|"+back_date+"|"+days+"|"+between_in+"|"+remark);
+                msg.setText("Save Done!");
+                msg.exec();
+                on_btn_clear_clicked();
+            }
+        }
+
     }
     else
     {
@@ -338,6 +361,8 @@ void MainWindow::on_btn_refresh_clicked() //read record, same as refresh record
         if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
         {
             QTextStream in(&record_file);
+
+            //counting line
             while (!in.atEnd()) {
                 QString get_text = in.readLine();
                 row++;
@@ -479,18 +504,19 @@ void MainWindow::on_btn_del_clicked()
     on_btn_refresh_clicked();
 }
 
-void MainWindow::del_one_line(int line_number, QString &strall)//
+void MainWindow::del_one_line(int line_number, QString &strall)
 {
     int nLine=0;
     int Index=0;
-    //calcu nLine step
+
+    //calcu nLine number of line
     while(Index!=-1)
     {
         Index=strall.indexOf('\n',Index+1);
         nLine++;
     }
 
-    //if index localtion starting with 0 char find and delete \n
+    //if index localtion starting with 0 [first char] find and delete \n
     if(line_number==0)
     {
         int nIndex=strall.indexOf('\n');
@@ -502,20 +528,20 @@ void MainWindow::del_one_line(int line_number, QString &strall)//
         int nIndex=0,nIndex2=0;
         while(nTemp--)
         {
-            //
             nIndex=strall.indexOf('\n',nIndex+1);//renew nIndex
-            if(nIndex!=-1)//说明是有效的
+            if(nIndex!=-1) //checking nIndex is valid or not
             {
                 nIndex2=strall.indexOf('\n',nIndex+1);
             }
         }
-        //删除的行不是最后一行（从nIndex+1这个位置起nIndex2-nIndex个字符全部抹去）
+
+        //if delete not is last line (form nIndex+1 start to nIndex2-nIndex char will remove)
         if(line_number<nLine-1)
         {
-            strall.remove(nIndex+1, nIndex2-nIndex);//不用减一
+            strall.remove(nIndex+1, nIndex2-nIndex);
         }
-        //删除的是最后一行（从nIndex起始len-nIndex个字符全抹去）
-        //不能从nIndex+1处开始，
+
+        //delete last line (starting form nIndex, len-nIndex char by string will remove)
         else if(line_number==nLine-1)
         {
             int len=strall.length();
@@ -552,4 +578,78 @@ void MainWindow::on_actionAbout_F12_triggered()
     about about_windows;
     about_windows.setModal(true);
     about_windows.exec();
+}
+
+bool isValidDateTimeInBetween(QString id, QString leave)
+{
+    QFile record_file("Data/record.txt");
+    QFileInfo info(record_file);
+    int row =0;
+    bool isInTheDateTime=false;
+    uint time_leave_record,time_back_record,get_leave_time;
+    QDateTime time_leave_from_record, time_back_leave_form_record, time_from_leave;
+
+    if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        QTextStream in(&record_file);
+        //counting line
+        while (!in.atEnd()) {
+            QString get_text = in.readLine();
+            row++;
+        }
+        record_file.close();
+    }
+    else
+    {
+        throw QString("Fail to Read");
+    }
+
+    //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
+    //[0][1]    [2]            [3]  [4]                 [5]                        [6]
+    //create new 2d array
+    QString **get_record_detail=new QString*[row];
+    for(int i=0; i<row;i++) get_record_detail[i] = new QString[2];
+
+    //store data into array
+    if (record_file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        if(row>0)
+        {
+            int count=0;
+            QTextStream in(&record_file);
+            while (!in.atEnd())
+            {
+                QString get_text = in.readLine();
+                QStringList getDetail=get_text.split("|");
+                if(getDetail[0]==id)
+                {
+                    get_record_detail[count][0] = getDetail[2];
+                    get_record_detail[count][1] = getDetail[3];
+                    count++;
+                }
+            }
+
+            for(int i=0; i<count;i++)
+            {
+                time_leave_from_record = QDateTime::fromString(get_record_detail[i][0],"dd/MM/yyyy h:m AP");
+                time_back_leave_form_record= QDateTime::fromString(get_record_detail[i][1],"dd/MM/yyyy h:m AP");
+                time_from_leave= QDateTime::fromString(leave,"dd/MM/yyyy h:m AP");
+
+                time_leave_record= time_leave_from_record.toTime_t();
+                time_back_record= time_back_leave_form_record.toTime_t();
+                get_leave_time= time_from_leave.toTime_t();
+
+                if(get_leave_time >= time_leave_record && get_leave_time <= time_back_record)
+                {
+                    isInTheDateTime=true;
+                }
+            }
+        }
+        record_file.close();
+    }
+
+    //free up memory
+    delete [] get_record_detail;
+    return  isInTheDateTime;
+
 }

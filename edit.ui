@@ -55,14 +55,14 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>340</x>
      <y>60</y>
-     <width>63</width>
+     <width>71</width>
      <height>19</height>
     </rect>
    </property>
    <property name="text">
-    <string>Back On</string>
+    <string>Return On</string>
    </property>
   </widget>
   <widget class="QDateTimeEdit" name="date_time_leave_on_edit">

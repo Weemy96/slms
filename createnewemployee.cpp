@@ -101,6 +101,7 @@ void CreateNewEmployee::on_btn_Create_clicked()
                 QString name_employee = save_new_employee->clean_space_front_n_back(ui->txt_CreateNewName->text()); //clean front and back text with space
                 //qDebug()<<name_employee;
                 isDone = save_new_employee->saveTxtToFile("Data/employee.txt",ui->txt_createNewID->text()+"|"+ name_employee);
+                save_new_employee->saveTxtToFile("Data/log.txt","Create new employee ID: ["+ui->txt_createNewID->text()+"] Name: ["+ui->txt_CreateNewName->text()+"] on "+QDateTime::currentDateTime().toString());
                 if(isDone)
                 {
                     msgBox.setText("Create Done.");
