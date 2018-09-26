@@ -14,6 +14,7 @@
 #include <exception>
 #include <QKeyEvent>
 #include <QModelIndexList>
+#include <about.h>
 
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
@@ -544,4 +545,11 @@ void MainWindow::del_Line_in_file(int line_number_to_delete, QString filename)
     writefile.close();
 
 
+}
+
+void MainWindow::on_actionAbout_F12_triggered()
+{
+    about about_windows;
+    about_windows.setModal(true);
+    about_windows.exec();
 }

@@ -60,6 +60,8 @@ private slots:
     void on_btn_del_clicked();
     void del_one_line(int line_number, QString &strall);
 
+    void on_actionAbout_F12_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
