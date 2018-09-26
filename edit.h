@@ -22,6 +22,10 @@ private slots:
 
     void on_btn_save_edit_clicked();
 
+    void on_date_time_leave_on_edit_dateTimeChanged(const QDateTime &dateTime);
+
+    void on_date_time_back_edit_dateTimeChanged(const QDateTime &dateTime);
+
 private:
     Ui::edit *ui;
 };

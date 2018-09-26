@@ -15,11 +15,8 @@
 #include <QKeyEvent>
 #include <QModelIndexList>
 
-void setMinTimeForLeaveBox();
-void setEnableFunc(bool isEnable);
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),

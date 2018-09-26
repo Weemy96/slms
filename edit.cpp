@@ -6,6 +6,11 @@
 #include <QFileInfo>
 #include <QFile>
 #include <QTextStream>
+#include <savetofile.h>
+
+QString countDateTime(QDateTime leave, QDateTime back);
+QString secondToDHMString(int64_t get_second);
+
 
 edit::edit(QWidget *parent) :
     QDialog(parent),
@@ -65,9 +70,11 @@ void edit::on_btn_save_edit_clicked()
         }
         file.close();
         data_list=read_all_data.split("\n");
-        data_list[row_number]="1232130|lel|25/09/2018 1:53 PM|25/09/2018 2:53 PM|0|0 Day 1 Hour 0 Minute |iuq iqiwueiquw m quemqwueiqwu hihfi uh";
+        savetofile *clean_space_and_enter = new savetofile;
+        data_list[row_number]=ui->txt_id_edit->text()+"|"+ui->txt_name_edit->text()+"|"+ui->date_time_leave_on_edit->text()+"|"+ui->date_time_back_edit->text()+"|"+QString::number(ui->date_time_leave_on_edit->dateTime().daysTo(ui->date_time_back_edit->dateTime()))+"|"
+                +ui->lbl_total_count_edit->text()+"|"+ clean_space_and_enter->clean_space_front_n_back(ui->txt_remark_edit->toPlainText().simplified());
+        delete clean_space_and_enter;
         data_list.removeLast();
-        qDebug()<<data_list;
 
         if(file.open(QIODevice::WriteOnly|QIODevice::Text))
         {
@@ -94,3 +101,20 @@ void edit::on_btn_save_edit_clicked()
         on_btn_cancel_edit_clicked();
     }
 }
+
+void edit::on_date_time_leave_on_edit_dateTimeChanged(const QDateTime &dateTime)
+{
+    ui->date_time_back_edit->setDateTime(dateTime.addSecs(3600));
+    ui->date_time_back_edit->setMinimumDateTime(dateTime.addSecs(3600));
+    ui->date_time_back_edit->setMaximumDateTime(dateTime.addDays(1095));
+}
+
+void edit::on_date_time_back_edit_dateTimeChanged(const QDateTime &dateTime)
+{
+    QDateTime getDateOnLeave = ui->date_time_leave_on_edit->dateTime(), getBackOn = dateTime;
+        //because the datetime.daysTo(<64bit int>) data type is <long long>(64bit int), spin box only <int>(32bit int).
+        //So I convert it and set limit for datetime max days is 1095 days (3 years).
+    QDateTime backDateTime = ui->date_time_back_edit->dateTime();
+    ui->lbl_total_count_edit->setText(countDateTime(getDateOnLeave,backDateTime));
+}
+
