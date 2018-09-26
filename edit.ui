@@ -77,6 +77,12 @@
    <property name="readOnly">
     <bool>true</bool>
    </property>
+   <property name="displayFormat">
+    <string>dd/MM/yyyy h:mm AP</string>
+   </property>
+   <property name="calendarPopup">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QDateTimeEdit" name="date_time_back_edit">
    <property name="geometry">
@@ -88,6 +94,12 @@
     </rect>
    </property>
    <property name="readOnly">
+    <bool>true</bool>
+   </property>
+   <property name="displayFormat">
+    <string>dd/MM/yyyy h:mm AP</string>
+   </property>
+   <property name="calendarPopup">
     <bool>true</bool>
    </property>
   </widget>

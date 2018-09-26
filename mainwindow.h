@@ -18,7 +18,7 @@ public:
     static QStringList get_record_data_passing;
     static bool isedit_saved;
     static bool isedit_req;
-
+    void del_Line_in_file(int line_number_to_delete, QString filename);
 
 private slots:
     void on_btn_clear_clicked();
@@ -59,7 +59,6 @@ private slots:
 
     void on_btn_del_clicked();
     void del_one_line(int line_number, QString &strall);
-    void del_Line_in_file(int line_number_to_delete, QString filename);
 
 private:
     Ui::MainWindow *ui;

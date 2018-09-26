@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -115,6 +115,12 @@
         <month>8</month>
         <day>9</day>
        </date>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy h:mm AP</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLineEdit" name="txt_id">
@@ -257,6 +263,12 @@
         <width>194</width>
         <height>28</height>
        </rect>
+      </property>
+      <property name="displayFormat">
+       <string>dd/MM/yyyy h:mm AP</string>
+      </property>
+      <property name="calendarPopup">
+       <bool>true</bool>
       </property>
      </widget>
      <widget class="QLabel" name="lbl_total">

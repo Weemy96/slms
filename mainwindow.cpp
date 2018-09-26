@@ -477,7 +477,7 @@ void MainWindow::on_btn_del_clicked()
     QModelIndexList selected_row=ui->table_data_view->selectionModel()->selectedRows();
     QModelIndex index=selected_row.at(0);
     int row_selected_index = index.row();
-    del_Line_in_file(row_selected_index, QString("Data/record.txt"));//(row_selected_index,QString("Data/record.txt"));
+    del_Line_in_file(row_selected_index, QString("Data/record.txt"));
     on_btn_refresh_clicked();
 }
 
