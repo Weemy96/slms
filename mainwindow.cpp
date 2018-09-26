@@ -15,6 +15,7 @@
 #include <QKeyEvent>
 #include <QModelIndexList>
 #include <about.h>
+#include <howtouse.h>
 
 QString countDateTime(QDateTime leave, QDateTime back);
 QString secondToDHMString(int64_t get_second);
@@ -324,7 +325,9 @@ void MainWindow::on_btn_addrecord_clicked() //need add check record <date
             {
                 //ID|Name|leave date|back date|days|beteen calculation (day/s hours minits)|remark
                 save_leave_data_n_function->saveTxtToFile("./Data/record.txt",id+"|"+name+"|"+leave_date+"|"+back_date+"|"+days+"|"+between_in+"|"+remark);
+                save_leave_data_n_function->saveTxtToFile("Data/log.txt","Record Added: ["+id+"] on "+QDateTime::currentDateTime().toString());
                 msg.setText("Save Done!");
+                msg.setIcon(QMessageBox::Information);
                 msg.exec();
                 on_btn_clear_clicked();
             }
@@ -651,5 +654,11 @@ bool isValidDateTimeInBetween(QString id, QString leave)
     //free up memory
     delete [] get_record_detail;
     return  isInTheDateTime;
+}
 
+void MainWindow::on_actionHow_to_use_triggered()
+{
+    howtouse menual;
+    menual.setModal(true);
+    menual.exec();
 }

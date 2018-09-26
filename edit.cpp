@@ -97,6 +97,10 @@ void edit::on_btn_save_edit_clicked()
                 }
                 file.close();
 
+                savetofile *savelog = new savetofile;
+                savelog->saveTxtToFile("Data/log.txt","Record Changed: ["+ui->txt_id_edit->text()+"] on "+QDateTime::currentDateTime().toString());
+                delete savelog;
+
                 MainWindow::isedit_saved=true;
                 msgbox.setWindowTitle("Edit");
                 msgbox.setText("Edit saved.");

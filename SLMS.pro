@@ -28,20 +28,23 @@ SOURCES += \
     createnewemployee.cpp \
     savetofile.cpp \
     edit.cpp \
-    about.cpp
+    about.cpp \
+    howtouse.cpp
 
 HEADERS += \
         mainwindow.h \
     createnewemployee.h \
     savetofile.h \
     edit.h \
-    about.h
+    about.h \
+    howtouse.h
 
 FORMS += \
         mainwindow.ui \
     createnewemployee.ui \
     edit.ui \
-    about.ui
+    about.ui \
+    howtouse.ui
 
 # Default rules for deployment.
 unix

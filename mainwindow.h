@@ -62,6 +62,8 @@ private slots:
 
     void on_actionAbout_F12_triggered();
 
+    void on_actionHow_to_use_triggered();
+
 private:
     Ui::MainWindow *ui;
 };
