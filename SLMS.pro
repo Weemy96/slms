@@ -24,15 +24,32 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    createnewemployee.cpp \
+    savetofile.cpp \
+    edit.cpp \
+    about.cpp \
+    howtouse.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    createnewemployee.h \
+    savetofile.h \
+    edit.h \
+    about.h \
+    howtouse.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    createnewemployee.ui \
+    edit.ui \
+    about.ui \
+    howtouse.ui
 
 # Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
+unix
+{
+    qnx: target.path = /tmp/$${TARGET}/bin
+    else: unix:!android: target.path = /opt/$${TARGET}/bin
+}
 !isEmpty(target.path): INSTALLS += target
