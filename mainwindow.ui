@@ -10,6 +10,18 @@
     <height>481</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>729</width>
+    <height>481</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>729</width>
+    <height>481</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Staff Leave Management System</string>
   </property>

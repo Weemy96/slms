@@ -10,6 +10,18 @@
     <height>149</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>463</width>
+    <height>149</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>463</width>
+    <height>149</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>Create New Employee Profile</string>
   </property>
