@@ -64,6 +64,10 @@ private slots:
 
     void on_actionHow_to_use_triggered();
 
+    void on_btn_find_clicked();
+
+    void on_txt_find_id_returnPressed();
+
 private:
     Ui::MainWindow *ui;
 };

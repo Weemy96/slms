@@ -662,3 +662,30 @@ void MainWindow::on_actionHow_to_use_triggered()
     menual.setModal(true);
     menual.exec();
 }
+
+void MainWindow::on_btn_find_clicked()
+{
+    if(!ui->txt_find_id->text().simplified().isEmpty())
+    {
+        QString filter = ui->txt_find_id->text();
+        for( int i = 0; i < ui->table_data_view->rowCount(); ++i )
+        {
+            bool match = false;
+            for( int j = 0; j < ui->table_data_view->columnCount(); ++j )
+            {
+                QTableWidgetItem *item = ui->table_data_view->item( i, j );
+                if( item->text().contains(filter) )
+                {
+                    match = true;
+                    break;
+                }
+            }
+            ui->table_data_view->setRowHidden( i, !match );
+        }
+    }
+}
+
+void MainWindow::on_txt_find_id_returnPressed()
+{
+    on_btn_find_clicked();
+}

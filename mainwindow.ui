@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>718</width>
-    <height>457</height>
+    <width>729</width>
+    <height>481</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,12 +19,12 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>701</width>
-      <height>391</height>
+      <width>711</width>
+      <height>441</height>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -313,7 +313,7 @@
        <rect>
         <x>5</x>
         <y>31</y>
-        <width>681</width>
+        <width>691</width>
         <height>291</height>
        </rect>
       </property>
@@ -401,6 +401,42 @@
        <string>View</string>
       </property>
      </widget>
+     <widget class="QLineEdit" name="txt_find_id">
+      <property name="geometry">
+       <rect>
+        <x>410</x>
+        <y>370</y>
+        <width>181</width>
+        <height>27</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>330</x>
+        <y>370</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Find by ID</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_find">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>370</y>
+        <width>85</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Find</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -409,7 +445,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>718</width>
+     <width>729</width>
      <height>24</height>
     </rect>
    </property>
@@ -426,14 +462,7 @@
     <addaction name="actionHow_to_use"/>
     <addaction name="actionAbout_F12"/>
    </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="actionFind"/>
-   </widget>
    <addaction name="menuCe"/>
-   <addaction name="menuView"/>
    <addaction name="menuAbout"/>
   </widget>
   <action name="menu_CreateNewEmployee">
