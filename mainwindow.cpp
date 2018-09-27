@@ -456,6 +456,11 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
     {
         on_btn_addrecord_clicked();
     }
+    else if(ui->tabWidget->currentIndex()==1 && ((event->key() == Qt::Key_F) && (event->modifiers()& Qt::ControlModifier)))//Crtl+F
+    {
+        ui->txt_find_id->setFocusPolicy(Qt::StrongFocus);
+        ui->txt_find_id->setFocus();
+    }
 }
 
 QStringList MainWindow::get_record_data_passing;
