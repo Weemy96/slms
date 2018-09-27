@@ -461,6 +461,10 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         ui->txt_find_id->setFocusPolicy(Qt::StrongFocus);
         ui->txt_find_id->setFocus();
     }
+    else if(ui->tabWidget->currentIndex()==1 && event->key() == Qt::Key_Delete)
+    {
+        on_btn_del_clicked();
+    }
 }
 
 QStringList MainWindow::get_record_data_passing;

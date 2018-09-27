@@ -196,12 +196,12 @@
        <rect>
         <x>520</x>
         <y>180</y>
-        <width>101</width>
+        <width>131</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Add Record</string>
+       <string>Add Record (F3)</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_check">
@@ -330,14 +330,14 @@
      <widget class="QPushButton" name="btn_refresh">
       <property name="geometry">
        <rect>
-        <x>300</x>
+        <x>294</x>
         <y>330</y>
-        <width>85</width>
+        <width>91</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Refresh</string>
+       <string>Refresh (F5)</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_edit">
@@ -364,12 +364,12 @@
        <rect>
         <x>600</x>
         <y>330</y>
-        <width>85</width>
+        <width>91</width>
         <height>27</height>
        </rect>
       </property>
       <property name="text">
-       <string>Delete</string>
+       <string>Delete (Del)</string>
       </property>
      </widget>
      <widget class="QLabel" name="lbl_total_record">
