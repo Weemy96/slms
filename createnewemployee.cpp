@@ -133,7 +133,7 @@ void CreateNewEmployee::on_btn_Create_clicked()
     }
     else
     {
-        msgBox.setText("Pls fill all text box.");
+        msgBox.setText("Please fill all text box and try again.");
         msgBox.setWindowTitle("Warning");
         msgBox.setIcon(QMessageBox::Warning);
         msgBox.exec();

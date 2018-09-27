@@ -165,7 +165,7 @@ void edit::on_btn_save_edit_clicked()
                 else
                 {
                     msgbox.setWindowTitle("Warning");
-                    msgbox.setText("Can't select return date for record, because crash with your saved.");
+                    msgbox.setText("Can't select return date for record, because crash with your saved record.");
                     msgbox.setIcon(QMessageBox::Warning);
                     msgbox.exec();
                 }
@@ -173,7 +173,7 @@ void edit::on_btn_save_edit_clicked()
             else
             {
                 msgbox.setWindowTitle("Warning");
-                msgbox.setText("Can't select leave date for record, because crash with your saved.");
+                msgbox.setText("Can't select leave date for record, because crash with your saved record.");
                 msgbox.setIcon(QMessageBox::Warning);
                 msgbox.exec();
             }
