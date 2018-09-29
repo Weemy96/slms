@@ -564,25 +564,29 @@ void MainWindow::del_one_line(int line_number, QString &strall)
 
 void MainWindow::del_Line_in_file(int line_number_to_delete, QString filename)
 {
-    QString strall;
-    QFile readfile(filename);
-    if(readfile.open(QIODevice::ReadOnly))
+    QMessageBox msg;
+    QMessageBox::StandardButton get_recall;
+    get_recall= msg.question(this,"Delete record row No."+QString::number(line_number_to_delete+1),"Are you sure delete this record?",QMessageBox::Yes|QMessageBox::No);
+    if(get_recall == QMessageBox::Yes)
     {
-        QTextStream stream(&readfile);
-        strall=stream.readAll();
+        QString strall;
+        QFile readfile(filename);
+        if(readfile.open(QIODevice::ReadOnly))
+        {
+            QTextStream stream(&readfile);
+            strall=stream.readAll();
+        }
+        readfile.close();
+        del_one_line(line_number_to_delete, strall);
+
+        QFile writefile(filename);
+        if(writefile.open(QIODevice::WriteOnly))
+        {
+            QTextStream wrtstream(&writefile);
+            wrtstream<<strall;
+        }
+        writefile.close();
     }
-    readfile.close();
-    del_one_line(line_number_to_delete, strall);
-
-    QFile writefile(filename);
-    if(writefile.open(QIODevice::WriteOnly))
-    {
-        QTextStream wrtstream(&writefile);
-        wrtstream<<strall;
-    }
-    writefile.close();
-
-
 }
 
 void MainWindow::on_actionAbout_F12_triggered()
